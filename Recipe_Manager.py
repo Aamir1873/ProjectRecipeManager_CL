@@ -1,3 +1,18 @@
+def add_recipe(recipe_name, ingredients, instructions, rating):
+    if int(rating) and 1 <= int(rating) <= 5:
+        recipe = {
+            "name": recipe_name,
+            "ingredients": ingredients,
+            "instructions": instructions,
+            "rating": int(rating)
+        }
+        recipes.append(recipe)
+        #update_recipe_list()
+        #add_to_database(recipe)
+        Final = "Recipe " + recipe_name + " added!"
+        return str(Final)
+    else:
+        return "Invalid rating value. Please enter a number between 1 and 5."
 def main():
     while True:
         print("\nRecipe Management System")
@@ -13,7 +28,7 @@ def main():
         choice = input("Enter your choice (1-8): ")
 
         if choice == "1":
-            # print(add_recipe_input())
+            print(add_recipe_input())
             pass
         elif choice == "2":
             # print(view_recipes())
