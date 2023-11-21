@@ -1,3 +1,4 @@
+import json
 def add_recipe(recipe_name, ingredients, instructions, rating):
     if int(rating) and 1 <= int(rating) <= 5:
         recipe = {
@@ -13,7 +14,6 @@ def add_recipe(recipe_name, ingredients, instructions, rating):
         return str(Final)
     else:
         return "Invalid rating value. Please enter a number between 1 and 5."
-import json
 
 def view_recipes():
     with open("Recipes_data.json", "r") as data_file:
