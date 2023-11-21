@@ -8,7 +8,12 @@ def export_recipes_input():
     file_path = input("Enter the file path to export recipes (e.g., recipes.json): ")
     return export_recipes(file_path)
 
-def main():
+def export_recipes(file_path):
+    if file_path:
+        with open(file_path, 'w') as file:
+            json.dump(recipes, file)
+        return "Recipes exported to JSON file."
+
     while True:
         print("\nRecipe Management System")
         print("1. Add Recipe")
