@@ -1,4 +1,3 @@
-import json
 def add_recipe(recipe_name, ingredients, instructions, rating):
     if int(rating) and 1 <= int(rating) <= 5:
         recipe = {
@@ -48,7 +47,7 @@ def main():
             print(add_recipe_input())
             pass
         elif choice == "2":
-            print(view_recipes())
+            # print(view_recipes())
             pass
         elif choice == "3":
             # print(edit_recipe_input())
@@ -57,7 +56,7 @@ def main():
             # print(delete_recipe_input())
             pass
         elif choice == "5":
-            print(export_recipes_input())
+            # print(export_recipes_input())
             pass
         elif choice == "6":
              print(import_recipes_input())
