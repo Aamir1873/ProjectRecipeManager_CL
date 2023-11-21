@@ -4,6 +4,10 @@ def view_recipes():
     # data.append(recipes)
     return data
 
+def export_recipes_input():
+    file_path = input("Enter the file path to export recipes (e.g., recipes.json): ")
+    return export_recipes(file_path)
+
 def main():
     while True:
         print("\nRecipe Management System")
@@ -31,7 +35,7 @@ def main():
             # print(delete_recipe_input())
             pass
         elif choice == "5":
-            # print(export_recipes_input())
+            print(export_recipes_input())
             pass
         elif choice == "6":
             # print(import_recipes_input())
