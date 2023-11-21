@@ -1,4 +1,16 @@
 import json
+
+def add_recipe_input():
+    recipe_name = input("Enter the recipe name: ")
+    if recipe_name:
+        ingredients = input("Enter the ingredients: ")
+        instructions = input("Enter the instructions: ")
+        rating = input("Enter the rating (1-5): ")
+
+        add_recipe(recipe_name, ingredients, instructions, rating)
+    else:
+        return "Recipe name cannot be empty."
+    
 def add_recipe(recipe_name, ingredients, instructions, rating):
     if int(rating) and 1 <= int(rating) <= 5:
         recipe = {
@@ -31,7 +43,8 @@ def export_recipes(file_path):
         with open(file_path, 'w') as file:
             json.dump(recipes, file)
         return "Recipes exported to JSON file."
-
+    
+def main():
     while True:
         print("\nRecipe Management System")
         print("1. Add Recipe")
