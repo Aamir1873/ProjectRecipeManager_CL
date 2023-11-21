@@ -1,3 +1,9 @@
+def view_recipes():
+    with open("Recipes_data.json", "r") as data_file:
+        data = json.load(data_file)
+    # data.append(recipes)
+    return data
+
 def main():
     while True:
         print("\nRecipe Management System")
@@ -16,7 +22,7 @@ def main():
             # print(add_recipe_input())
             pass
         elif choice == "2":
-            # print(view_recipes())
+            print(view_recipes())
             pass
         elif choice == "3":
             # print(edit_recipe_input())
