@@ -13,6 +13,22 @@ def add_recipe(recipe_name, ingredients, instructions, rating):
         return str(Final)
     else:
         return "Invalid rating value. Please enter a number between 1 and 5."
+    
+    def import_recipes_input():
+        file_path = input(
+        "Enter the file path to import recipes from (e.g., recipes.json): ")
+    return import_recipes(file_path)
+
+
+def import_recipes(file_path):
+    if file_path:
+        with open(file_path, 'r') as file:
+            loaded_recipes = json.load(file)
+            recipes.extend(loaded_recipes)
+            update_recipe_list()
+        return "Recipes imported from JSON file."
+    
+    
 def main():
     while True:
         print("\nRecipe Management System")
@@ -43,7 +59,7 @@ def main():
             # print(export_recipes_input())
             pass
         elif choice == "6":
-            # print(import_recipes_input())
+             print(import_recipes_input())
             pass
         elif choice == "7":
             pass
