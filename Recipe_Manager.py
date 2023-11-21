@@ -18,6 +18,19 @@ def add_recipe(recipe_name, ingredients, instructions, rating):
         file_path = input(
         "Enter the file path to import recipes from (e.g., recipes.json): ")
     return import_recipes(file_path)
+def view_recipes():
+    with open("Recipes_data.json", "r") as data_file:
+        data = json.load(data_file)
+    return data
+recipes = view_recipes()
+def export_recipes_input():
+    file_path = input("Enter the file path to export recipes (e.g., recipes.json): ")
+    return export_recipes(file_path)
+def export_recipes(file_path):
+    if file_path:
+        with open(file_path, 'w') as file:
+            json.dump(recipes, file)
+        return "Recipes exported to JSON file."
 
 
 def import_recipes(file_path):
