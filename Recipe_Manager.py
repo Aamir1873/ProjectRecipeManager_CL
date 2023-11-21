@@ -1,8 +1,11 @@
+import json
+
 def view_recipes():
     with open("Recipes_data.json", "r") as data_file:
         data = json.load(data_file)
-    # data.append(recipes)
     return data
+
+recipes = view_recipes()
 
 def export_recipes_input():
     file_path = input("Enter the file path to export recipes (e.g., recipes.json): ")
