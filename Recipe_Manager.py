@@ -4,7 +4,7 @@ def add_recipe_input():
     recipe_name = input("Enter the recipe name: ")
     if recipe_name:
         ingredients = input("Enter the ingredients: ")
-        instructions = input("Enter the instructions: ")
+        instructions = input("Enter the instructions(add \ then n after every step): ")
         rating = input("Enter the rating (1-5): ")
 
         add_recipe(recipe_name, ingredients, instructions, rating)
@@ -133,8 +133,14 @@ def find_recipe_by_name():
     name = input("Enter recipe name: ")
     for recipe in recipes:
         if recipe["name"].lower() == name.lower():
-            return recipe
-    return None
+            print(recipe["name"])
+            print("ingredients")
+            print(recipe["ingredients"])
+            print("instructions")
+            print(recipe["instructions"])
+            print("rating:", recipe["rating"],"out of 5")
+            return 
+    print("Recipe not found")
     
 def main():
     while True:
@@ -149,7 +155,7 @@ def main():
         print("8. View Recipe Details")
         print("9. Exit")
 
-        choice = input("Enter your choice (1-8): ")
+        choice = input("Enter your choice (1-9): ")
 
         if choice == "1":
             print(add_recipe_input())
@@ -174,8 +180,7 @@ def main():
             for recipe in filtered_recipes:
                 print(recipe["name"])
         elif choice == "8":
-            recipeDetails = find_recipe_by_name()
-            print(recipeDetails)
+            find_recipe_by_name()
         elif choice == "9":
             break
         else:
