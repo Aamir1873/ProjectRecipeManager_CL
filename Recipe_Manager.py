@@ -86,6 +86,18 @@ def export_recipes(file_path):
             json.dump(recipes, file)
         return "Recipes exported to JSON file."
     
+def import_recipes_input():
+    file_path = input("Enter the file path to import recipes from (e.g., recipes.json): ")
+    return import_recipes(file_path)
+
+def import_recipes(file_path):
+    if file_path:
+        with open(file_path, 'r') as file:
+            loaded_recipes = json.load(file)
+            recipes.extend(loaded_recipes)
+            update_recipe_list()
+        return "Recipes imported from JSON file."
+    
 def filter_recipes_input():
     rating_filter = input("Enter the rating to filter (leave empty for all): ")
     return filter_recipes(category_filter, rating_filter)
