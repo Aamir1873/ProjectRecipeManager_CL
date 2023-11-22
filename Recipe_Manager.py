@@ -20,8 +20,8 @@ def add_recipe(recipe_name, ingredients, instructions, rating):
             "rating": int(rating)
         }
         recipes.append(recipe)
-        #update_recipe_list()
-        #add_to_database(recipe)
+        update_recipe_list()
+        add_to_database(recipe)
         Final = "Recipe " + recipe_name + " added!"
         return str(Final)
     else:
@@ -31,6 +31,11 @@ def view_recipes():
     with open("Recipes_data.json", "r") as data_file:
         data = json.load(data_file)
     return data
+def view_all_recipes():
+    recipeNames = []
+    for i in recipes:
+        recipeNames.append(i["name"])
+    return recipeNames
 
 def edit_recipe_input():
     recipe_name = input("Enter the recipe name to edit: ")
@@ -110,12 +115,23 @@ def filter_recipes(category_filter, rating_filter):
 
     return filtered_recipes
 
-def find_recipe_by_name(name):
-    print("THIS IS RUNNING")
-    print(recipes)
+def update_recipe_list():
     for recipe in recipes:
-        print(recipe)
-        print(name)
+        print(recipe["name"])
+
+def add_to_database(recipe):
+    with open("Recipes_data.json", "r") as data_file:
+        data = json.load(data_file)
+    if not data:
+        data = []
+    data.append(recipe)
+    print(data)
+    with open("Recipes_data.json", "w") as data_file:
+        json.dump(data, data_file, indent=4)
+
+def find_recipe_by_name():
+    name = input("Enter recipe name: ")
+    for recipe in recipes:
         if recipe["name"].lower() == name.lower():
             return recipe
     return None
@@ -130,34 +146,37 @@ def main():
         print("5. Export Recipes")
         print("6. Import Recipes")
         print("7. Filter Recipes")
-        print("8. Exit")
+        print("8. View Recipe Details")
+        print("9. Exit")
 
         choice = input("Enter your choice (1-8): ")
 
         if choice == "1":
             print(add_recipe_input())
-            pass
+          
         elif choice == "2":
-            print(view_recipes())
-            pass
+            print(view_all_recipes())
+           
         elif choice == "3":
             print(edit_recipe_input())
-            pass
+           
         elif choice == "4":
-            # print(delete_recipe_input())
-            pass
+            print(delete_recipe_input())
+           
         elif choice == "5":
             print(export_recipes_input())
-            pass
+           
         elif choice == "6":
             # print(import_recipes_input())
             pass
         elif choice == "7":
-            pass
             filtered_recipes = filter_recipes_input()
             for recipe in filtered_recipes:
                 print(recipe["name"])
         elif choice == "8":
+            recipeDetails = find_recipe_by_name()
+            print(recipeDetails)
+        elif choice == "9":
             break
         else:
             print("Invalid choice. Please enter a number between 1 and 7.")
