@@ -86,6 +86,28 @@ def export_recipes(file_path):
             json.dump(recipes, file)
         return "Recipes exported to JSON file."
     
+def filter_recipes_input():
+    rating_filter = input("Enter the rating to filter (leave empty for all): ")
+    return filter_recipes(category_filter, rating_filter)
+
+def filter_recipes(category_filter, rating_filter):
+    filtered_recipes = []
+    for recipe in recipes:
+        if (not rating_filter or (int(rating_filter) and 1 <= int(rating_filter) <= 5 and int(rating_filter) == recipe["rating"])):
+            filtered_recipes.append(recipe)
+
+    return filtered_recipes
+
+def find_recipe_by_name(name):
+    print("THIS IS RUNNING")
+    print(recipes)
+    for recipe in recipes:
+        print(recipe)
+        print(name)
+        if recipe["name"].lower() == name.lower():
+            return recipe
+    return None
+    
 def main():
     while True:
         print("\nRecipe Management System")
@@ -107,7 +129,7 @@ def main():
             print(view_recipes())
             pass
         elif choice == "3":
-            # print(edit_recipe_input())
+            print(edit_recipe_input())
             pass
         elif choice == "4":
             # print(delete_recipe_input())
@@ -120,9 +142,9 @@ def main():
             pass
         elif choice == "7":
             pass
-            # filtered_recipes = filter_recipes_input()
-            # for recipe in filtered_recipes:
-            #     print(recipe["name"])
+            filtered_recipes = filter_recipes_input()
+            for recipe in filtered_recipes:
+                print(recipe["name"])
         elif choice == "8":
             break
         else:
