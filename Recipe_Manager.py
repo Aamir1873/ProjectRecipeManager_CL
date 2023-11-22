@@ -79,6 +79,16 @@ def filter_recipes(category_filter, rating_filter):
             filtered_recipes.append(recipe)
 
     return filtered_recipes
+
+def find_recipe_by_name(name):
+    print("THIS IS RUNNING")
+    print(recipes)
+    for recipe in recipes:
+        print(recipe)
+        print(name)
+        if recipe["name"].lower() == name.lower():
+            return recipe
+    return None
     
 def main():
     while True:
