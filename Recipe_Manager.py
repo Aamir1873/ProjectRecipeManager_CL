@@ -119,6 +119,10 @@ def find_recipe_by_name(name):
         if recipe["name"].lower() == name.lower():
             return recipe
     return None
+
+def update_recipe_list():
+    for recipe in recipes:
+        print(recipe["name"])
     
 def main():
     while True:
@@ -144,13 +148,13 @@ def main():
             print(edit_recipe_input())
             pass
         elif choice == "4":
-            # print(delete_recipe_input())
+            print(delete_recipe_input())
             pass
         elif choice == "5":
             print(export_recipes_input())
             pass
         elif choice == "6":
-            # print(import_recipes_input())
+            print(import_recipes_input())
             pass
         elif choice == "7":
             pass
