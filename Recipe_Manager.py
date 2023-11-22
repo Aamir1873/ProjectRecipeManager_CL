@@ -20,8 +20,8 @@ def add_recipe(recipe_name, ingredients, instructions, rating):
             "rating": int(rating)
         }
         recipes.append(recipe)
-        #update_recipe_list()
-        #add_to_database(recipe)
+        update_recipe_list()
+        add_to_database(recipe)
         Final = "Recipe " + recipe_name + " added!"
         return str(Final)
     else:
@@ -109,6 +109,20 @@ def filter_recipes(category_filter, rating_filter):
             filtered_recipes.append(recipe)
 
     return filtered_recipes
+
+def update_recipe_list():
+    for recipe in recipes:
+        print(recipe["name"])
+
+def add_to_database(recipe):
+    with open("Recipes_data.json", "r") as data_file:
+        data = json.load(data_file)
+    if not data:
+        data = []
+    data.append(recipe)
+    print(data)
+    with open("Recipes_data.json", "w") as data_file:
+        json.dump(data, data_file, indent=4)
 
 def find_recipe_by_name(name):
     print("THIS IS RUNNING")
