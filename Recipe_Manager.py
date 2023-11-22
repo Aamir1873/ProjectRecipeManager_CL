@@ -31,6 +31,11 @@ def view_recipes():
     with open("Recipes_data.json", "r") as data_file:
         data = json.load(data_file)
     return data
+def view_all_recipes():
+    recipeNames = []
+    for i in recipes:
+        recipeNames.append(i["name"])
+    return recipeNames
 
 def edit_recipe_input():
     recipe_name = input("Enter the recipe name to edit: ")
@@ -152,13 +157,13 @@ def main():
             print(add_recipe_input())
             pass
         elif choice == "2":
-            print(view_recipes())
+            print(view_all_recipes())
             pass
         elif choice == "3":
             print(edit_recipe_input())
             pass
         elif choice == "4":
-            # print(delete_recipe_input())
+            print(delete_recipe_input())
             pass
         elif choice == "5":
             print(export_recipes_input())
