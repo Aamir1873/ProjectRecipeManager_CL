@@ -167,7 +167,7 @@ def main():
             print(export_recipes_input())
            
         elif choice == "6":
-            # print(import_recipes_input())
+            print(import_recipes_input())
             pass
         elif choice == "7":
             filtered_recipes = filter_recipes_input()
