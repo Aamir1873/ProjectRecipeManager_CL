@@ -34,6 +34,24 @@ def view_recipes():
 
 recipes = view_recipes()
 
+def delete_recipe_input():
+    recipe_name = input("Enter the recipe name to delete: ")
+    recipe = find_recipe_by_name(recipe_name)
+
+    if recipe:
+        confirm = input(f"Do you want to delete the recipe '{recipe_name}'? (yes/no): ")
+        delete_recipe(recipe_name, confirm)
+    else:
+        return "Recipe not found."
+
+def delete_recipe(recipe_name, confirm):
+    if confirm.lower() == 'yes':
+        recipes.remove(find_recipe_by_name(recipe_name))
+        update_recipe_list()
+        return "Recipe " + recipe_name + " deleted!"
+    else:
+        return "Delete cancelled"
+
 def export_recipes_input():
     file_path = input("Enter the file path to export recipes (e.g., recipes.json): ")
     return export_recipes(file_path)
