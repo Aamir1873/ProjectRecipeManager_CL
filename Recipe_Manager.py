@@ -32,6 +32,30 @@ def view_recipes():
         data = json.load(data_file)
     return data
 
+def edit_recipe_input():
+    recipe_name = input("Enter the recipe name to edit: ")
+    recipe = find_recipe_by_name(recipe_name)
+
+    if recipe:
+        ingredients = input(f"Enter the new ingredients ({recipe['ingredients']}): ")
+        instructions = input(f"Enter the new instructions ({recipe['instructions']}): ")
+        rating = input(f"Enter the new rating (1-5) ({recipe['rating']}): ")
+        edit_recipe(recipe_name, ingredients, instructions, rating)
+    else:
+        return "Recipe not found."
+    
+def edit_recipe(recipe_name, ingredients, instructions, rating):
+        recipe = find_recipe_by_name(recipe_name)
+        if int(rating) and 1 <= int(rating) <= 5:
+            recipe["ingredients"] = ingredients
+            recipe["instructions"] = instructions
+
+            recipe["rating"] = int(rating)
+            update_recipe_list()
+            return "Recipe " + recipe_name + " modified!"
+        else:
+            return "Invalid rating value. Please enter a number between 1 and 5."
+
 recipes = view_recipes()
 
 def export_recipes_input():
