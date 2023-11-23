@@ -7,20 +7,19 @@ def add_recipe_input():
         instructions = input("Enter the instructions(add \ then n after every step): ")
         rating = input("Enter the rating (1-5): ")
 
-        add_recipe(recipe_name, ingredients, instructions, rating)
+        return add_recipe(recipe_name, ingredients, instructions, rating)
     else:
         return "Recipe name cannot be empty."
     
 def add_recipe(recipe_name, ingredients, instructions, rating):
-    if int(rating) and 1 <= int(rating) <= 5:
+    if float(rating) and float(rating) >= 1 and float(rating) <= 5:
         recipe = {
             "name": recipe_name,
             "ingredients": ingredients,
             "instructions": instructions,
-            "rating": int(rating)
+            "rating": float(rating)
         }
         recipes.append(recipe)
-        update_recipe_list()
         add_to_database(recipe)
         Final = "Recipe " + recipe_name + " added!"
         return str(Final)
@@ -39,33 +38,65 @@ def view_all_recipes():
 
 def edit_recipe_input():
     recipe_name = input("Enter the recipe name to edit: ")
-    recipe = find_recipe_by_name(recipe_name)
+    recipe = get_recipe_details(recipe_name)
 
     if recipe:
-        ingredients = input(f"Enter the new ingredients ({recipe['ingredients']}): ")
-        instructions = input(f"Enter the new instructions ({recipe['instructions']}): ")
-        rating = input(f"Enter the new rating (1-5) ({recipe['rating']}): ")
-        edit_recipe(recipe_name, ingredients, instructions, rating)
+        ingredients = recipe['ingredients']
+        instructions = recipe['instructions']
+        rating = recipe['rating']
+        while True:
+            print("1. Ingredients")
+            print("2. Instructions")
+            print("3. Rating(1-5)")
+            print("4. Done")
+            decision = input(f"Choose which category do you want to edit:")            
+            if decision == "1":
+                print(f"Current ingredients: {recipe['ingredients']}")
+                ingredients = input(f"Enter the new ingredients: ")
+            
+            elif decision == "2":
+                print(f"Current instructions: {recipe['instructions']}")
+                instructions = input(f"Enter the new instructions: ")
+            
+            elif decision == "3":
+                print(f"Current rating: {recipe['rating']}")
+                rating = input(f"Enter the new rating (1-5): ")
+            
+            elif decision == "4":
+                break
+            else:
+                print("Invalid choice. Please enter a number between 1 and 5.")
+        return edit_recipe(recipe,ingredients, instructions, rating)
     else:
         return "Recipe not found."
     
-def edit_recipe(recipe_name, ingredients, instructions, rating):
-        recipe = find_recipe_by_name(recipe_name)
-        if int(rating) and 1 <= int(rating) <= 5:
+def edit_recipe(recipe, ingredients, instructions, rating):
+        if float(rating) and 1 <= float(rating) <= 5:
             recipe["ingredients"] = ingredients
             recipe["instructions"] = instructions
-
-            recipe["rating"] = int(rating)
-            update_recipe_list()
-            return "Recipe " + recipe_name + " modified!"
+            recipe["rating"] = float(rating)
+            update_recipe_list(recipe)
+            return "Recipe " + recipe['name'] + " modified!"
         else:
             return "Invalid rating value. Please enter a number between 1 and 5."
+
+
+def update_recipe_list(recipe):
+    with open("Recipes_data.json", "r") as data_file:
+        data = json.load(data_file)
+        for a in data:
+            if a['name'] == recipe['name']:
+                a["ingredients"] = recipe["ingredients"]
+                a["instructions"] = recipe["instructions"]
+                a["rating"] = recipe["rating"]
+    with open("Recipes_data.json", 'w') as file: 
+        json.dump(data, file, indent=4)
 
 recipes = view_recipes()
 
 def delete_recipe_input():
     recipe_name = input("Enter the recipe name to delete: ")
-    recipe = find_recipe_by_name(recipe_name)
+    recipe = get_recipe_details(recipe_name)
 
     if recipe:
         confirm = input(f"Do you want to delete the recipe '{recipe_name}'? (yes/no): ")
@@ -73,9 +104,14 @@ def delete_recipe_input():
     else:
         return "Recipe not found."
 
+def get_recipe_details(recipe_name):
+    for x in recipes:
+        if x['name'].lower() == recipe_name.lower():
+            return x
+
 def delete_recipe(recipe_name, confirm):
     if confirm.lower() == 'yes':
-        recipes.remove(find_recipe_by_name(recipe_name))
+        recipes.remove(get_recipe_details(recipe_name))
         update_recipe_list()
         return "Recipe " + recipe_name + " deleted!"
     else:
@@ -105,19 +141,14 @@ def import_recipes(file_path):
     
 def filter_recipes_input():
     rating_filter = input("Enter the rating to filter (leave empty for all): ")
-    return filter_recipes(category_filter, rating_filter)
+    return filter_recipes(rating_filter)
 
-def filter_recipes(category_filter, rating_filter):
+def filter_recipes(rating_filter):
     filtered_recipes = []
     for recipe in recipes:
-        if (not rating_filter or (int(rating_filter) and 1 <= int(rating_filter) <= 5 and int(rating_filter) == recipe["rating"])):
+        if (not rating_filter or (float(rating_filter) and 1 <= float(rating_filter) <= 5 and float(rating_filter) == recipe['rating'])):
             filtered_recipes.append(recipe)
-
     return filtered_recipes
-
-def update_recipe_list():
-    for recipe in recipes:
-        print(recipe["name"])
 
 def add_to_database(recipe):
     with open("Recipes_data.json", "r") as data_file:
@@ -125,7 +156,6 @@ def add_to_database(recipe):
     if not data:
         data = []
     data.append(recipe)
-    print(data)
     with open("Recipes_data.json", "w") as data_file:
         json.dump(data, data_file, indent=4)
 
